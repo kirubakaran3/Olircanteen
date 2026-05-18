@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hospital Canteen Feedback</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+ <style>   
+  body {
+      font-family: Arial, sans-serif;
+      background: #f4f8fb;
+      padding: 20px;
+    }
+    .container {
+      max-width: 400px;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin: auto;
+    }
+    h2 {
+      text-align: center;
+      color: #2c7be5;
+    }
+    label {
+      font-weight: bold;
+      margin-top: 10px;
+      display: block;
+    }
+    select, textarea, button {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+    button {
+      background: #2c7be5;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      margin-top: 15px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #1a5fc4;
+    }
+    .note {
+      font-size: 12px;
+      text-align: center;
+      margin-top: 10px;
+      color: gray;
+    }
+    .call {
+      text-align: center;
+      color:#74B82C ;
+      margin: auto;
+    }
+    </style> 
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Olir-Canteen Feedback</h2>
+  <p style="text-align:center;">Help us serve you better</p>
+
+  <form>
+    <label>Food Quality</label>
+    <select>
+      <option>Excellent</option>
+      <option>Good</option>
+      <option>Average</option>
+      <option>Poor</option>
+    </select>
+
+    <label>Hygiene & Cleanliness</label>
+    <select>
+      <option>Excellent</option>
+      <option>Good</option>
+      <option>Average</option>
+      <option>Poor</option>
+    </select>
+
+    <label>Price Satisfaction</label>
+    <select>
+      <option>Fair</option>
+      <option>High</option>
+      <option>Low</option>
+    </select>
+
+    <label>Suggestions</label>
+    <textarea rows="3" placeholder="Your suggestions..."></textarea>
+
+    <button type="submit">Submit Feedback</button>
+  </form>
+
+  <div class="note">
+    Your feedback is confidential
+  </div>
+  </div>
+  <div class="call">
+    <p>Call us 24/7</p>
+    <h3>&#128222 :+91 7904058787</h2>
+    <h3>&#128222 :+91 63696 35387</h3>
+  </div>
+  
+  <!-- your form stays the same -->
+
+
+<!-- Firebase scripts MUST be here -->
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyDpPwHNqBHoXxnFBEz87plIOLv6Xs-wnsQ",
+    authDomain: "olir-kumaranfoods.firebaseapp.com",
+    projectId: "olir-kumaranfoods",
+    storageBucket: "olir-kumaranfoods.firebasestorage.app",
+    messagingSenderId: "364433361646",
+    appId: "1:364433361646:web:5f86ac37d9273676eb01ff"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+  const form = document.querySelector("form");
+
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const data = {
+      food: form[0].value,
+      hygiene: form[1].value,
+      price: form[2].value,
+      suggestion: form[3].value,
+      date: new Date()
+    };
+
+    db.collection("feedback").add(data)
+      .then(() => {
+        alert("Thank you for your feedback");
+        form.reset();
+      })
+      .catch((error) => {
+        alert("Error saving feedback");
+        console.error(error);
+      });
+  });
+</script>
+
+</body>
+</html>
